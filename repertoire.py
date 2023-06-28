@@ -74,15 +74,15 @@ def gettrack():
 def showtrack():
     repertoirelijst = gettrack()
     trackindex = 0
-    print(forr3("ID")+" : "+forl15("STIJL")+forl25("TITEL")+forc3("TEL")+forl5("TOON"))
+    trackcount = 0
+    print(forr3("ID")+" : "+forl15("STIJL")+forl25("TITEL")+forc3("TIK")+forl5("TOON"))
     print(forr3(3*"-")+" : "+forl15(15*"-")+forl25(25*"-")+forc3(3*"-")+forl5(3*"-"))
     for i in repertoirelijst:
         trackindex += 1
-        if stijltje.lower() in i[0].lower():
-            if stukje.lower() in i[1].lower():
-                if maatje.lower() in i[2].lower():
-                    if toontje.lower() in i[3].lower():
-                        print(forr3(str(trackindex))+" : "+forl15(i[0][:15])+forl25(i[1][:25])+forc3(i[2])+forl5(i[3]))
+        if stijltje.lower() in i[0].lower() and stukje.lower() in i[1].lower() and maatje.lower() in i[2].lower() and toontje.lower() in i[3].lower():
+            print(forr3(str(trackindex))+" : "+forl15(i[0][:15])+forl25(i[1][:25])+forc3(i[2])+forl5(i[3]))
+            trackcount += 1
+    print("Aantal tracks : %s" % trackcount)
     repertoirelijst = sorted(repertoirelijst)
     return repertoirelijst
 
@@ -93,7 +93,7 @@ def newtrack():
         tracklijst = []
         for i in repertoirelijst:
             tracklijst.append(i[1].lower())
-        titela = input("Geef de titel van de track:\n%s" % inputindent)[:30].strip().replace("'","").replace("’","").replace(",","").replace(".","").replace("-","").replace("_","").replace("?","").replace("!","")
+        titela = input("Geef de titel van de track:\n%s" % inputindent).strip().replace("'","").replace("’","").replace(",","").replace(".","").replace("-","").replace("_","").replace("?","").replace("!","")
         if titela.upper() in afsluitlijst:
             return
         elif titela == "":
@@ -189,7 +189,7 @@ while rep == True:
                 break
             elif tos == "1":
                 print("Filter \"AND\" (alle criteria moeten matchen)")
-                stukje = input("Geef (een stukje) van de titel op:\n%s" % inputindent)
+                stukje = input("Geef (een stukje) van de titel op:\n%s" % inputindent).strip().replace("'","").replace("’","").replace(",","").replace(".","").replace("-","").replace("_","").replace("?","").replace("!","").replace(" ","")
                 if stukje.upper() in afsluitlijst:
                     break
                 stijltje = input("Geef (een stukje) van de stijl op:\n%s" % inputindent)
