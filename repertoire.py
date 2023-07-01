@@ -1,14 +1,20 @@
 #!/usr/bin/env python3
 import ast, os
-
+versie = "1.0"
+datum = "20230701"
+plaats = "Pedara"
+basismap = os.path.dirname(os.path.realpath(__file__)) # de map waar het pythonscript in staat moet schrijfbaar zijn
+os.chdir(basismap)
 print("\nRepertoire\n")
 afsluitlijst = ["X","Q"]
 inputindent = "    : "
 forc3 = "{:^3}".format
 forr3 = "{:>3}".format
+forc4 = "{:^4}".format
 forl5 = "{:<5}".format
+forl8 = "{:<8}".format
 forl15 = "{:<15}".format
-forl25 = "{:<25}".format
+forl30 = "{:<30}".format
 
 tiklijst = ["3","4","A"]
 toonlijst = ["A","B","C","D","E","F","G"]
@@ -25,6 +31,7 @@ def getstyle():
 def showstyle():
     stijllijst = getstyle()
     repertoirelijst = gettrack()
+    toonstijllijst = []
     stijlindex = 0
     for i in stijllijst:
         tracks = 0
@@ -32,13 +39,13 @@ def showstyle():
             if i == j[0]:
                 tracks += 1
         stijlindex += 1
-        if stijltje.lower() in i.lower():
-            print(forr3(str(stijlindex))+" : "+forl15(i)+str(tracks))
+        toonstijllijst.append(stijlindex)
+        print(forr3(str(stijlindex))+" : "+forl15(i)+str(tracks))
     stijllijst = sorted(stijllijst)
-    return stijllijst
+    return stijllijst,toonstijllijst
 
 def newstyle():
-    stijllijst = showstyle()
+    stijllijst = showstyle()[0]
     stil = True
     while stil == True:
         stijla = input("Geef een nieuwe stijl op:\n%s" % inputindent).strip()
@@ -72,19 +79,85 @@ def gettrack():
     return repertoirelijst
 
 def showtrack():
+    stukje = input("Geef stukjes van de titels op, gescheiden door komma's:\n%s" % inputindent).strip().replace("'","").replace("’","").replace(".","").replace("-","").replace("_","").replace("?","").replace("!","").replace(" ","").split(",")
+    if stukje[0].upper() in afsluitlijst:
+        return
+    stijltje = input("Geef stukjes van de stijlen op, gescheiden door komma's:\n%s" % inputindent).split(",")
+    if stijltje[0].upper() in afsluitlijst:
+        return
+    maatje= input("Geef stukjes van de maatsoorten op, gescheiden door komma's:\n%s" % inputindent).split(",")
+    if maatje[0].upper() in afsluitlijst:
+        return
+    toontje= input("Geef stukjes van de toonsoorten op, gescheiden door komma's:\n%s" % inputindent).split(",")
+    if toontje[0].upper() in afsluitlijst:
+        return
     repertoirelijst = gettrack()
+    toontracklijst = []
     trackindex = 0
-    print(forr3("ID")+" : "+forl15("STIJL")+forl25("TITEL")+forc3("TEL")+forl5("TOON"))
-    print(forr3(3*"-")+" : "+forl15(15*"-")+forl25(25*"-")+forc3(3*"-")+forl5(3*"-"))
-    for i in repertoirelijst:
-        trackindex += 1
-        if stijltje.lower() in i[0].lower():
-            if stukje.lower() in i[1].lower():
-                if maatje.lower() in i[2].lower():
-                    if toontje.lower() in i[3].lower():
-                        print(forr3(str(trackindex))+" : "+forl15(i[0][:15])+forl25(i[1][:25])+forc3(i[2])+forl5(i[3]))
+    trackcount = 0
+    eenoftwee = input("Wil je de output in 1 of 2 kolommen:\n%s" % inputindent)
+    if eenoftwee.upper() in afsluitlijst:
+        return
+    elif eenoftwee == "1":
+        print(forr3("ID")+" : "+forl15("STIJL")+forl30("TITEL")+forc4("TIK")+forl5("TOON"))
+        print(forr3("+"+2*"-")+"-+-"+forl15(14*"-"+"+")+forl30(29*"-"+"+")+forc4(3*"-"+"+")+forl5(4*"-"+"+"))
+        for i in repertoirelijst:
+            trackindex += 1
+            for j in stukje:
+                for k in stijltje:
+                    for l in maatje:
+                        for m in toontje:
+                            if k.lower() in i[0].lower() and j.lower() in i[1].lower() and l.lower() in i[2].lower() and m.lower() in i[3].lower():
+                                print(forr3(str(trackindex))+" : "+forl15(i[0][:15])+forl30(i[1][:30])+forc4(i[2])+forl5(i[3]))
+                                trackcount += 1
+                                toontracklijst.append(trackindex)
+        print("Aantal tracks : %s" % trackcount)
+    elif eenoftwee == "2":
+        breed = []
+        if len(repertoirelijst) > 1:
+            print(forr3("ID")+" : "+forl15("STIJL")+forl30("TITEL")+forc4("TIK")+forl5("TOON")+"\\"+forr3("ID")+" : "+forl15("STIJL")+forl30("TITEL")+forc4("TIK")+forl5("TOON"))
+            print(forr3("+"+2*"-")+"-+-"+forl15(14*"-"+"+")+forl30(29*"-"+"+")+forc4(3*"-"+"+")+forl5(5*"-")+"\\"+forr3("+"+2*"-")+"-+-"+forl15(14*"-"+"+")+forl30(29*"-"+"+")+forc4(3*"-"+"+")+forl5(4*"-"+"+"))
+        else:
+            print(forr3("ID")+" : "+forl15("STIJL")+forl30("TITEL")+forc4("TIK")+forl5("TOON"))
+            print(forr3(3*"-")+"-+-"+forl15(14*"-"+"+")+forl30(29*"-"+"+")+forc4(3*"-"+"+")+forl5(5*"-"))
+        for i in repertoirelijst:
+            trackindex += 1
+            for j in stukje:
+                for k in stijltje:
+                    for l in maatje:
+                        for m in toontje:
+                            if k.lower() in i[0].lower() and j.lower() in i[1].lower() and l.lower() in i[2].lower() and m.lower() in i[3].lower():
+                                if len(breed) == 0:
+                                    try:
+                                        print(forr3(str(trackindex))+" : "+forl15(i[0][:15])+forl30(i[1][:30])+forc4(i[2])+forl5(i[3]),end = "\\")
+                                        trackcount += 1
+                                        breed.append(i)
+                                    except(Exception) as error:
+                                        print(error)
+                                else:
+                                    if i[0] == breed[0][0]:
+                                        try:
+                                            print(forr3(str(trackindex))+" : "+forl15(i[0][:15])+forl30(i[1][:30])+forc4(i[2])+forl5(i[3]))
+                                            trackcount += 1
+                                            breed = []
+                                        except(Exception) as error:
+                                            print(error)
+                                    else:
+                                        print()
+                                        try:
+                                            print(forr3(str(trackindex))+" : "+forl15(i[0][:15])+forl30(i[1][:30])+forc4(i[2])+forl5(i[3]),end = "\\")
+                                            trackcount += 1
+                                            breed = [i]
+                                        except(Exception) as error:
+                                            print(error)
+
+                                toontracklijst.append(trackindex)
+        if len(breed) != 0:
+            print()
+        print("Aantal tracks : %s" % trackcount)
+
     repertoirelijst = sorted(repertoirelijst)
-    return repertoirelijst
+    return repertoirelijst,toontracklijst
 
 def newtrack():
     tit = True
@@ -93,7 +166,7 @@ def newtrack():
         tracklijst = []
         for i in repertoirelijst:
             tracklijst.append(i[1].lower())
-        titela = input("Geef de titel van de track:\n%s" % inputindent)[:30].strip().replace("'","").replace("’","").replace(",","").replace(".","").replace("-","").replace("_","").replace("?","").replace("!","")
+        titela = input("Geef de titel van de track:\n%s" % inputindent).strip().replace("'","").replace("’","").replace(",","").replace(".","").replace("-","").replace("_","").replace("?","").replace("!","")
         if titela.upper() in afsluitlijst:
             return
         elif titela == "":
@@ -114,7 +187,7 @@ def newtrack():
     style = False
     while style == False:
         print("in stijl")
-        stijllijst = showstyle()
+        stijllijst = showstyle()[0]
         stijl = input(inputindent)
         if stijl.upper() in afsluitlijst:
             return
@@ -154,22 +227,41 @@ def newtrack():
         print(repertoirelijst, file = r)
 
 def delstyle():
-    stijllijst = getstyle()
+    lijsten = showstyle()
+    stijllijst = lijsten[0]
+    dellijst = lijsten[1]
+    doei = input("Geef het indexnummer van de stijl die je wilt verwijderen:\n%s" % inputindent)
     repertoirelijst = gettrack()
-    for i in repertoirelijst:
-        if stijllijst[int(doei)-1] in i[0]:
-            print("Stijl is in gebruik, zal niet verwijderen.")
-        else:
-            stijllijst.remove(stijllijst[int(doei)-1])
-            with open("Stijlen","w") as s:
-                print(stijllijst, end = "", file = s)
-            return
+    try:
+        for i in repertoirelijst:
+            if stijllijst[int(doei)-1] in i[0]:
+                print("Stijl is in gebruik, zal niet verwijderen.")
+            else:
+                if int(doei) in dellijst:
+                    stijllijst.remove(stijllijst[int(doei)-1])
+                    with open("Stijlen","w") as s:
+                        print(stijllijst, end = "", file = s)
+                else:
+                    print("Dat indexnummer staat niet in de lijst.")
+                return
+    except:
+        print("Typ een geldig indexnummer (getal)")
 
 def deltrack():
-    repertoirelijst = gettrack()
-    repertoirelijst.remove(repertoirelijst[int(doei)-1])
-    with open("Repertoire","w") as r:
-        print(repertoirelijst, end = "", file = r)
+    lijsten = showtrack()
+    repertoirelijst = lijsten[0]
+    dellijst = lijsten[1]
+    doei = input("Geef het indexnummer van de track die je wilt verwijderen:\n%s" % inputindent)
+    try:
+        if int(doei) in dellijst:
+            repertoirelijst.remove(repertoirelijst[int(doei)-1])
+            with open("Repertoire","w") as r:
+                print(repertoirelijst, end = "", file = r)
+        else:
+            print("Dat indexnummer staat niet in de lijst.")
+        return
+    except:
+        print("Typ een geldig indexnummer (getal)")
 
 def seltrack():
     selt = input("Welke titel:\n%s" % inputindent)
@@ -177,8 +269,8 @@ def seltrack():
 rep = True
 while rep == True:
     uit = "Y"
-    stukje,stijltje,maatje,toontje = "","","",""
-    keuze = input("Kies:\n  1 : Toon\n  2 : Voeg toe\n  3 : Verwijder\n  4 : Handwerk\n%s" % inputindent)
+    stukje,stijltje,maatje,toontje = [],[],[],[]
+    keuze = input("Kies:\n  1 : Toon\n  2 : Voeg toe\n  3 : Verwijder\n  4 : Bewerk\n%s" % inputindent)
     if keuze.upper() in afsluitlijst:
         exit()
     elif keuze == "1":
@@ -188,24 +280,8 @@ while rep == True:
             if tos.upper() in afsluitlijst:
                 break
             elif tos == "1":
-                print("Filter \"AND\" (alle criteria moeten matchen)")
-                stukje = input("Geef (een stukje) van de titel op:\n%s" % inputindent)
-                if stukje.upper() in afsluitlijst:
-                    break
-                stijltje = input("Geef (een stukje) van de stijl op:\n%s" % inputindent)
-                if stijltje.upper() in afsluitlijst:
-                    break
-                maatje= input("Geef (een stukje) van de maatsoort op:\n%s" % inputindent)
-                if maatje.upper() in afsluitlijst:
-                    break
-                toontje= input("Geef (een stukje) van de toonsoort op:\n%s" % inputindent)
-                if toontje.upper() in afsluitlijst:
-                    break
                 showtrack()
             elif tos == "2":
-                stijltje = input("Geef (een stukje) van de stijl op:\n%s" % inputindent)
-                if stijltje.upper() in afsluitlijst:
-                    break
                 showstyle()
     elif keuze == "2":
         bij = True
@@ -220,22 +296,15 @@ while rep == True:
     elif keuze == "3":
         weg = True
         while weg == True:
-            wv = input("Verwijder\n  1 : Track\n  2 : Stijl\n%s" % inputindent)
-            if wv.upper() in afsluitlijst:
+            tos = input("Verwijder\n  1 : Track\n  2 : Stijl\n%s" % inputindent)
+            if tos.upper() in afsluitlijst:
                 break
-            elif wv == "1":
-                stukje = input("Geef (een stukje) van de titel op:\n%s" % inputindent)
-                stijltje,maatje,toontje = "","",""
-                showtrack()
-                doei = input("Geef het indexnummer van de track die je wilt verwijderen:\n%s" % inputindent)
+            elif tos == "1":
                 try:
                     deltrack()
                 except(Exception) as error:
                     print(error)
-            elif wv == "2":
-                stijltje = input("Geef (een stukje) van de stijl op:\n%s" % inputindent)
-                showstyle()
-                doei = input("Geef het indexnummer van de stijl die je wilt verwijderen:\n%s" % inputindent)
+            elif tos == "2":
                 try:
                     delstyle()
                 except(Exception) as error:
@@ -250,4 +319,7 @@ while rep == True:
                 os.system("vim Repertoire")
             elif tos == "2":
                 os.system("vim Stijlen")
-
+    elif keuze == "0":
+        print(forl8("Versie")+forc3(":")+versie)
+        print(forl8("Datum")+forc3(":")+datum)
+        print(forl8("Plaats")+forc3(":")+plaats)
