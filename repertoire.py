@@ -1,13 +1,18 @@
 #!/usr/bin/env python3
 import ast, os
+versie = "1.0"
+datum = "20230701"
+plaats = "Pedara"
 basismap = os.path.dirname(os.path.realpath(__file__)) # de map waar het pythonscript in staat moet schrijfbaar zijn
 os.chdir(basismap)
 print("\nRepertoire\n")
 afsluitlijst = ["X","Q"]
 inputindent = "    : "
-forc4 = "{:^4}".format
+forc3 = "{:^3}".format
 forr3 = "{:>3}".format
+forc4 = "{:^4}".format
 forl5 = "{:<5}".format
+forl8 = "{:<8}".format
 forl15 = "{:<15}".format
 forl30 = "{:<30}".format
 
@@ -90,19 +95,67 @@ def showtrack():
     toontracklijst = []
     trackindex = 0
     trackcount = 0
-    print(forr3("ID")+" : "+forl15("STIJL")+forl30("TITEL")+forc4("TIK")+forl5("TOON"))
-    print(forr3(3*"-")+" : "+forl15(15*"-")+forl30(30*"-")+forc4(4*"-")+forl5(5*"-"))
-    for i in repertoirelijst:
-        trackindex += 1
-        for j in stukje:
-            for k in stijltje:
-                for l in maatje:
-                    for m in toontje:
-                        if k.lower() in i[0].lower() and j.lower() in i[1].lower() and l.lower() in i[2].lower() and m.lower() in i[3].lower():
-                            print(forr3(str(trackindex))+" : "+forl15(i[0][:15])+forl30(i[1][:30])+forc4(i[2])+forl5(i[3]))
-                            trackcount += 1
-                            toontracklijst.append(trackindex)
-    print("Aantal tracks : %s" % trackcount)
+    eenoftwee = input("Wil je de output in 1 of 2 kolommen:\n%s" % inputindent)
+    if eenoftwee.upper() in afsluitlijst:
+        return
+    elif eenoftwee == "1":
+        print(forr3("ID")+" : "+forl15("STIJL")+forl30("TITEL")+forc4("TIK")+forl5("TOON"))
+        print(forr3("+"+2*"-")+"-+-"+forl15(14*"-"+"+")+forl30(29*"-"+"+")+forc4(3*"-"+"+")+forl5(4*"-"+"+"))
+        for i in repertoirelijst:
+            trackindex += 1
+            for j in stukje:
+                for k in stijltje:
+                    for l in maatje:
+                        for m in toontje:
+                            if k.lower() in i[0].lower() and j.lower() in i[1].lower() and l.lower() in i[2].lower() and m.lower() in i[3].lower():
+                                print(forr3(str(trackindex))+" : "+forl15(i[0][:15])+forl30(i[1][:30])+forc4(i[2])+forl5(i[3]))
+                                trackcount += 1
+                                toontracklijst.append(trackindex)
+        print("Aantal tracks : %s" % trackcount)
+    elif eenoftwee == "2":
+        breed = []
+        if len(repertoirelijst) > 1:
+            print(forr3("ID")+" : "+forl15("STIJL")+forl30("TITEL")+forc4("TIK")+forl5("TOON")+"\\"+forr3("ID")+" : "+forl15("STIJL")+forl30("TITEL")+forc4("TIK")+forl5("TOON"))
+            print(forr3("+"+2*"-")+"-+-"+forl15(14*"-"+"+")+forl30(29*"-"+"+")+forc4(3*"-"+"+")+forl5(5*"-")+"\\"+forr3("+"+2*"-")+"-+-"+forl15(14*"-"+"+")+forl30(29*"-"+"+")+forc4(3*"-"+"+")+forl5(4*"-"+"+"))
+        else:
+            print(forr3("ID")+" : "+forl15("STIJL")+forl30("TITEL")+forc4("TIK")+forl5("TOON"))
+            print(forr3(3*"-")+"-+-"+forl15(14*"-"+"+")+forl30(29*"-"+"+")+forc4(3*"-"+"+")+forl5(5*"-"))
+        for i in repertoirelijst:
+            trackindex += 1
+            for j in stukje:
+                for k in stijltje:
+                    for l in maatje:
+                        for m in toontje:
+                            if k.lower() in i[0].lower() and j.lower() in i[1].lower() and l.lower() in i[2].lower() and m.lower() in i[3].lower():
+                                if len(breed) == 0:
+                                    try:
+                                        print(forr3(str(trackindex))+" : "+forl15(i[0][:15])+forl30(i[1][:30])+forc4(i[2])+forl5(i[3]),end = "\\")
+                                        trackcount += 1
+                                        breed.append(i)
+                                    except(Exception) as error:
+                                        print(error)
+                                else:
+                                    if i[0] == breed[0][0]:
+                                        try:
+                                            print(forr3(str(trackindex))+" : "+forl15(i[0][:15])+forl30(i[1][:30])+forc4(i[2])+forl5(i[3]))
+                                            trackcount += 1
+                                            breed = []
+                                        except(Exception) as error:
+                                            print(error)
+                                    else:
+                                        print()
+                                        try:
+                                            print(forr3(str(trackindex))+" : "+forl15(i[0][:15])+forl30(i[1][:30])+forc4(i[2])+forl5(i[3]),end = "\\")
+                                            trackcount += 1
+                                            breed = [i]
+                                        except(Exception) as error:
+                                            print(error)
+
+                                toontracklijst.append(trackindex)
+        if len(breed) != 0:
+            print()
+        print("Aantal tracks : %s" % trackcount)
+
     repertoirelijst = sorted(repertoirelijst)
     return repertoirelijst,toontracklijst
 
@@ -208,7 +261,7 @@ def deltrack():
             print("Dat indexnummer staat niet in de lijst.")
         return
     except:
-        print("Typ een indexnummer (getal)")
+        print("Typ een geldig indexnummer (getal)")
 
 def seltrack():
     selt = input("Welke titel:\n%s" % inputindent)
@@ -266,4 +319,7 @@ while rep == True:
                 os.system("vim Repertoire")
             elif tos == "2":
                 os.system("vim Stijlen")
-
+    elif keuze == "0":
+        print(forl8("Versie")+forc3(":")+versie)
+        print(forl8("Datum")+forc3(":")+datum)
+        print(forl8("Plaats")+forc3(":")+plaats)
