@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import ast, os
 
-versie = "1.2"
+versie = "1.21"
 datum = "20230702"
 plaats = "Pedara"
 
@@ -58,22 +58,22 @@ def showstyle():
 
 def showtrack():
     stukje = input("Geef een stukje van de titel op, gescheiden door komma's:\n%s" % inputindent).strip().replace(" ,",",").replace(", ",",").replace("'","").replace("’","").replace(".","").replace("-","").replace("_","").replace("?","").replace("!","").replace(" ","").split(",")
-    if stukje[0].upper() in afsluitlijst:
+    if stukje.upper() in afsluitlijst:
         return
     stijltje = input("Geef een stukje van de stijl op, gescheiden door komma's:\n%s" % inputindent).replace(" ","").split(",")
-    if stijltje[0].upper() in afsluitlijst:
+    if stijltje.upper() in afsluitlijst:
         return
     maatje= input("Geef een stukje van de maatsoort op, gescheiden door komma's:\n%s" % inputindent).split(",")
-    if maatje[0].upper() in afsluitlijst:
+    if maatje.upper() in afsluitlijst:
         return
     toontje= input("Geef een stukje van de toonsoort op, gescheiden door komma's:\n%s" % inputindent).split(",")
-    if toontje[0].upper() in afsluitlijst:
+    if toontje.upper() in afsluitlijst:
         return
     repertoirelijst = gettrack()
     toontracklijst = []
     trackindex = 0
     trackcount = 0
-    eenoftwee = input("Wil je de output in 1 of 2 kolommen:\n%s" % inputindent)
+    eenoftwee = input("Wil je de output in 1, 2 of 3 kolommen:\n%s" % inputindent)
     if eenoftwee.upper() in afsluitlijst:
         return
     elif eenoftwee == "1":
@@ -115,6 +115,63 @@ def showtrack():
                             for m in toontje:
                                 if k.lower() in i[0].lower() and j.lower() in i[1].lower() and l.lower() in i[2].lower() and m.lower() in i[3].lower():
                                     if len(breed) == 0:
+                                        try:
+                                            print(forr3(str(trackindex))+" : "+forl15(i[0][:15])+forl30(i[1][:30])+forc4(i[2])+forl5(i[3]),end = "\\")
+                                            print(forr3(str(trackindex))+" : "+forl15(i[0][:15])+forl30(i[1][:30])+forc4(i[2])+forl5(i[3]),end = "\\",file = r)
+                                            trackcount += 1
+                                            breed.append(i)
+                                        except(Exception) as error:
+                                            print(error)
+                                    else:
+                                        if i[0] == breed[0][0]:
+                                            try:
+                                                print(forr3(str(trackindex))+" : "+forl15(i[0][:15])+forl30(i[1][:30])+forc4(i[2])+forl5(i[3]))
+                                                print(forr3(str(trackindex))+" : "+forl15(i[0][:15])+forl30(i[1][:30])+forc4(i[2])+forl5(i[3]),file = r)
+                                                trackcount += 1
+                                                breed = []
+                                            except(Exception) as error:
+                                                print(error)
+                                        else:
+                                            print()
+                                            print(file = r)
+                                            try:
+                                                print(forr3(str(trackindex))+" : "+forl15(i[0][:15])+forl30(i[1][:30])+forc4(i[2])+forl5(i[3]),end = "\\")
+                                                print(forr3(str(trackindex))+" : "+forl15(i[0][:15])+forl30(i[1][:30])+forc4(i[2])+forl5(i[3]),end = "\\",file = r)
+                                                trackcount += 1
+                                                breed = [i]
+                                            except(Exception) as error:
+                                                print(error)
+                                    toontracklijst.append(trackindex)
+            if len(breed) != 0:
+                print()
+            print("Aantal tracks : %s" % trackcount)
+            print("Aantal tracks : %s" % trackcount,file = r)
+    elif eenoftwee == "3":
+        with open("Repertoirelijst.txt","w") as r:
+            breed = []
+            if len(repertoirelijst) > 2:
+                print(forr3("ID")+" : "+forl15("STIJL")+forl30("TITEL")+forc4("TIK")+forl5("TOON")+"\\"+forr3("ID")+" : "+forl15("STIJL")+forl30("TITEL")+forc4("TIK")+forl5("TOON")+"\\"+forr3("ID")+" : "+forl15("STIJL")+forl30("TITEL")+forc4("TIK")+forl5("TOON"))
+                print(forr3("ID")+" : "+forl15("STIJL")+forl30("TITEL")+forc4("TIK")+forl5("TOON")+"\\"+forr3("ID")+" : "+forl15("STIJL")+forl30("TITEL")+forc4("TIK")+forl5("TOON")+"\\"+forr3("ID")+" : "+forl15("STIJL")+forl30("TITEL")+forc4("TIK")+forl5("TOON"),file = r)
+                print(forr3("+"+2*"-")+"-+-"+forl15(14*"-"+"+")+forl30(29*"-"+"+")+forc4(3*"-"+"+")+forl5(5*"-")+"\\"+forr3("+"+2*"-")+"-+-"+forl15(14*"-"+"+")+forl30(29*"-"+"+")+forc4(3*"-"+"+")+forl5(5*"-")+"\\"+forr3("+"+2*"-")+"-+-"+forl15(14*"-"+"+")+forl30(29*"-"+"+")+forc4(3*"-"+"+")+forl5(4*"-"+"+"))
+                print(forr3("+"+2*"-")+"-+-"+forl15(14*"-"+"+")+forl30(29*"-"+"+")+forc4(3*"-"+"+")+forl5(5*"-")+"\\"+forr3("+"+2*"-")+"-+-"+forl15(14*"-"+"+")+forl30(29*"-"+"+")+forc4(3*"-"+"+")+forl5(5*"-")+"\\"+forr3("+"+2*"-")+"-+-"+forl15(14*"-"+"+")+forl30(29*"-"+"+")+forc4(3*"-"+"+")+forl5(4*"-"+"+"),file = r)
+            elif len(repertoirelijst) > 1:
+                print(forr3("ID")+" : "+forl15("STIJL")+forl30("TITEL")+forc4("TIK")+forl5("TOON")+"\\"+forr3("ID")+" : "+forl15("STIJL")+forl30("TITEL")+forc4("TIK")+forl5("TOON"))
+                print(forr3("ID")+" : "+forl15("STIJL")+forl30("TITEL")+forc4("TIK")+forl5("TOON")+"\\"+forr3("ID")+" : "+forl15("STIJL")+forl30("TITEL")+forc4("TIK")+forl5("TOON"),file = r)
+                print(forr3("+"+2*"-")+"-+-"+forl15(14*"-"+"+")+forl30(29*"-"+"+")+forc4(3*"-"+"+")+forl5(5*"-")+"\\"+forr3("+"+2*"-")+"-+-"+forl15(14*"-"+"+")+forl30(29*"-"+"+")+forc4(3*"-"+"+")+forl5(4*"-"+"+"))
+                print(forr3("+"+2*"-")+"-+-"+forl15(14*"-"+"+")+forl30(29*"-"+"+")+forc4(3*"-"+"+")+forl5(5*"-")+"\\"+forr3("+"+2*"-")+"-+-"+forl15(14*"-"+"+")+forl30(29*"-"+"+")+forc4(3*"-"+"+")+forl5(4*"-"+"+"),file = r)
+            else:
+                print(forr3("ID")+" : "+forl15("STIJL")+forl30("TITEL")+forc4("TIK")+forl5("TOON"))
+                print(forr3("ID")+" : "+forl15("STIJL")+forl30("TITEL")+forc4("TIK")+forl5("TOON"),file = r)
+                print(forr3("+"+2*"-")+"-+-"+forl15(14*"-"+"+")+forl30(29*"-"+"+")+forc4(3*"-"+"+")+forl5(4*"-"+"+"))
+                print(forr3("+"+2*"-")+"-+-"+forl15(14*"-"+"+")+forl30(29*"-"+"+")+forc4(3*"-"+"+")+forl5(4*"-"+"+"),file = r)
+            for i in repertoirelijst:
+                trackindex += 1
+                for j in stukje:
+                    for k in stijltje:
+                        for l in maatje:
+                            for m in toontje:
+                                if k.lower() in i[0].lower() and j.lower() in i[1].lower() and l.lower() in i[2].lower() and m.lower() in i[3].lower():
+                                    if len(breed) <= 1:
                                         try:
                                             print(forr3(str(trackindex))+" : "+forl15(i[0][:15])+forl30(i[1][:30])+forc4(i[2])+forl5(i[3]),end = "\\")
                                             print(forr3(str(trackindex))+" : "+forl15(i[0][:15])+forl30(i[1][:30])+forc4(i[2])+forl5(i[3]),end = "\\",file = r)
