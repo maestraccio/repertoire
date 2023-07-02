@@ -58,16 +58,16 @@ def showstyle():
 
 def showtrack():
     stukje = input("Geef een stukje van de titel op, gescheiden door komma's:\n%s" % inputindent).strip().replace(" ,",",").replace(", ",",").replace("'","").replace("’","").replace(".","").replace("-","").replace("_","").replace("?","").replace("!","").replace(" ","").split(",")
-    if stukje.upper() in afsluitlijst:
+    if stukje[0].upper() in afsluitlijst:
         return
     stijltje = input("Geef een stukje van de stijl op, gescheiden door komma's:\n%s" % inputindent).replace(" ","").split(",")
-    if stijltje.upper() in afsluitlijst:
+    if stijltje[0].upper() in afsluitlijst:
         return
     maatje= input("Geef een stukje van de maatsoort op, gescheiden door komma's:\n%s" % inputindent).split(",")
-    if maatje.upper() in afsluitlijst:
+    if maatje[0].upper() in afsluitlijst:
         return
     toontje= input("Geef een stukje van de toonsoort op, gescheiden door komma's:\n%s" % inputindent).split(",")
-    if toontje.upper() in afsluitlijst:
+    if toontje[0].upper() in afsluitlijst:
         return
     repertoirelijst = gettrack()
     toontracklijst = []
