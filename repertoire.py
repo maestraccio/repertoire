@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
 import ast, os
-versie = "1.1"
-datum = "20230701"
+
+versie = "1.2"
+datum = "20230702"
 plaats = "Pedara"
+
 basismap = os.path.dirname(os.path.realpath(__file__)) # de map waar het pythonscript in staat moet schrijfbaar zijn
 os.chdir(basismap)
-print("\nRepertoire\n")
-afsluitlijst = ["X","Q"]
+
 inputindent = "    : "
 forc3 = "{:^3}".format
 forr3 = "{:>3}".format
@@ -16,6 +17,7 @@ forl8 = "{:<8}".format
 forl15 = "{:<15}".format
 forl30 = "{:<30}".format
 
+afsluitlijst = ["X","Q"]
 tiklijst = ["3","4","A"]
 toonlijst = ["A","B","C","D","E","F","G"]
 
@@ -27,6 +29,16 @@ def getstyle():
         stijllijst = []
     stijllijst = sorted(stijllijst)
     return stijllijst
+
+def gettrack():
+    try:
+        with open("Repertoire","r") as r:
+            repertoirelijst = ast.literal_eval(r.read())
+    except(Exception) as error:
+        print(error)
+        repertoirelijst = []
+    repertoirelijst = sorted(repertoirelijst)
+    return repertoirelijst
 
 def showstyle():
     stijllijst = getstyle()
@@ -44,51 +56,17 @@ def showstyle():
     stijllijst = sorted(stijllijst)
     return stijllijst,toonstijllijst
 
-def newstyle():
-    stijllijst = showstyle()[0]
-    stil = True
-    while stil == True:
-        stijla = input("Geef een nieuwe stijl op:\n%s" % inputindent).strip()
-        if stijla.upper() in afsluitlijst:
-            return
-        elif stijla == "":
-            pass
-        else:
-            stijlb = stijla.split(" ")
-            stijlc = []
-            stijl = ""
-            for i in stijlb:
-                stijlc.append(i.capitalize())
-            for i in stijlc:
-                stijl += i
-            if stijl not in stijllijst:
-                stijllijst.append(stijl.replace(" ",""))
-                stijllijst = sorted(stijllijst)
-                with open("Stijlen","w") as s:
-                    print(stijllijst, end = "", file = s)
-                stil = False
-
-def gettrack():
-    try:
-        with open("Repertoire","r") as r:
-            repertoirelijst = ast.literal_eval(r.read())
-    except(Exception) as error:
-        print(error)
-        repertoirelijst = []
-    repertoirelijst = sorted(repertoirelijst)
-    return repertoirelijst
-
 def showtrack():
-    stukje = input("Geef stukjes van de titels op, gescheiden door komma's:\n%s" % inputindent).strip().replace(" ,",",").replace(", ",",").replace("'","").replace("’","").replace(".","").replace("-","").replace("_","").replace("?","").replace("!","").replace(" ","").split(",")
+    stukje = input("Geef een stukje van de titel op, gescheiden door komma's:\n%s" % inputindent).strip().replace(" ,",",").replace(", ",",").replace("'","").replace("’","").replace(".","").replace("-","").replace("_","").replace("?","").replace("!","").replace(" ","").split(",")
     if stukje[0].upper() in afsluitlijst:
         return
-    stijltje = input("Geef stukjes van de stijlen op, gescheiden door komma's:\n%s" % inputindent).replace(" ","").split(",")
+    stijltje = input("Geef een stukje van de stijl op, gescheiden door komma's:\n%s" % inputindent).replace(" ","").split(",")
     if stijltje[0].upper() in afsluitlijst:
         return
-    maatje= input("Geef stukjes van de maatsoorten op, gescheiden door komma's:\n%s" % inputindent).split(",")
+    maatje= input("Geef een stukje van de maatsoort op, gescheiden door komma's:\n%s" % inputindent).split(",")
     if maatje[0].upper() in afsluitlijst:
         return
-    toontje= input("Geef stukjes van de toonsoorten op, gescheiden door komma's:\n%s" % inputindent).split(",")
+    toontje= input("Geef een stukje van de toonsoort op, gescheiden door komma's:\n%s" % inputindent).split(",")
     if toontje[0].upper() in afsluitlijst:
         return
     repertoirelijst = gettrack()
@@ -163,15 +141,37 @@ def showtrack():
                                                 breed = [i]
                                             except(Exception) as error:
                                                 print(error)
-
                                     toontracklijst.append(trackindex)
             if len(breed) != 0:
                 print()
             print("Aantal tracks : %s" % trackcount)
             print("Aantal tracks : %s" % trackcount,file = r)
-
     repertoirelijst = sorted(repertoirelijst)
     return repertoirelijst,toontracklijst
+
+def newstyle():
+    stijllijst = showstyle()[0]
+    stil = True
+    while stil == True:
+        stijla = input("Geef een nieuwe stijl op:\n%s" % inputindent).strip()
+        if stijla.upper() in afsluitlijst:
+            return
+        elif stijla == "":
+            pass
+        else:
+            stijlb = stijla.split(" ")
+            stijlc = []
+            stijl = ""
+            for i in stijlb:
+                stijlc.append(i.capitalize())
+            for i in stijlc:
+                stijl += i
+            if stijl not in stijllijst:
+                stijllijst.append(stijl.replace(" ",""))
+                stijllijst = sorted(stijllijst)
+                with open("Stijlen","w") as s:
+                    print(stijllijst, end = "", file = s)
+                stil = False
 
 def newtrack():
     tit = True
@@ -223,7 +223,7 @@ def newtrack():
             tak = False
     doof = True
     while doof == True:
-        toon = input("in toonsoort:\n%s" % inputindent)[:4]
+        toon = input("in toonsoort:\n%s" % inputindent).replace(" ","").replace("ineur","").replace("majeur","").replace("inor","").replace("major","")
         if toon.upper() in afsluitlijst:
             return
         elif toon == "":
@@ -239,6 +239,132 @@ def newtrack():
     repertoirelijst = sorted(repertoirelijst)
     with open("Repertoire","w") as r:
         print(repertoirelijst, file = r)
+
+def changestyle():
+    lijsten = showstyle()
+    stijllijst = lijsten[0]
+    toonstijllijst = lijsten[1]
+    welke = input("Welke stijl wil je wijzigen:\n%s" % inputindent)
+    if welke.upper() in afsluitlijst:
+        return
+    try:
+        if int(welke) in toonstijllijst:
+            stijla = input("Geef deze stijl een nieuwe naam:\n%s" % inputindent).strip()
+            if stijla.upper() in afsluitlijst:
+                return
+            elif stijla == "":
+                pass
+            else:
+                stijlb = stijla.split(" ")
+                stijlc = []
+                stijl = ""
+                for i in stijlb:
+                    stijlc.append(i.capitalize())
+                for i in stijlc:
+                    stijl += i
+                stijllijst[int(welke)-1] = stijl
+                stijllijst = sorted(stijllijst)
+                with open("Stijlen","w") as s:
+                    print(stijllijst, end = "", file = s)
+        else:
+            print("Dat indexnummer staat niet in de lijst.")
+    except(Exception) as error:
+        print("Typ een geldig indexnummer (getal)")
+
+def changetrack():
+    tracklijsten = showtrack()
+    repertoirelijst = tracklijsten[0]
+    toontracklijst = tracklijsten[1]
+    welke = input("Welke track wil je wijzigen:\n%s" % inputindent)
+    if welke.upper() in afsluitlijst:
+        return
+    try:
+        if int(welke) in toontracklijst:
+            wat = input("Wat wil je hieraan wijzigen:\n  1 : Stijl\n  2 : Naam\n  3 : Maatsoort\n  4 : Toonsoort\n%s" % inputindent)
+            if wat.upper() in afsluitlijst:
+                return
+            elif wat == "1":
+                stil = True
+                while stil == True:
+                    print("Kies een nieuwe stijl:")
+                    stijllijsten = showstyle()
+                    stijllijst = stijllijsten[0]
+                    toonstijllijst = stijllijsten[1]
+                    welkestijl = input(inputindent)
+                    if welkestijl.upper() in afsluitlijst:
+                        return
+                    elif welkestijl == "":
+                        pass
+                    else:
+                        try:
+                            if len(stijllijst) < int(welkestijl) or int(welkestijl) < 1:
+                                print("Dat indexnummer staat niet in de lijst.")
+                            else:
+                                repertoirelijst[int(welke)-1][0] = stijllijst[int(welkestijl)-1]
+                                with open("Repertoire", "w") as r:
+                                    print(repertoirelijst, end = "", file = r)
+                                stil = False
+                        except(Exception) as error:
+                            print("Typ een geldig indexnummer (getal)")
+            elif wat == "2":
+                tit = True
+                while tit == True:
+                    titela = input("Corrigeer de naam:\n%s" % inputindent)
+                    if titela.upper() in afsluitlijst:
+                        return
+                    elif titela == "":
+                        pass
+                    else:
+                        titelb = titela.split(" ")
+                        titelc = []
+                        titel = ""
+                        for i in titelb:
+                            titelc.append(i.capitalize())
+                        for i in titelc:
+                            titel += i
+                        tracklijst = []
+                        for i in repertoirelijst:
+                            tracklijst.append(i[1].lower())
+                        if titel.lower() in tracklijst:
+                            print("Titel bestaat al.")
+                            return
+                        else:
+                            repertoirelijst[int(welke)-1][1] = titel
+                            with open("Repertoire", "w") as r:
+                                print(repertoirelijst, end = "", file = r)
+                            tit = False
+            elif wat == "3":
+                tak = True
+                while tak == True:
+                    tik = input("in 3, 4 of \"A\"nders:\n%s" % inputindent).upper()
+                    if tik.upper() in afsluitlijst:
+                        return
+                    elif tik not in tiklijst:
+                        print("3, 4 of \"A\"")
+                    else:
+                        repertoirelijst[int(welke)-1][2] = tik
+                        with open("Repertoire", "w") as r:
+                            print(repertoirelijst, end = "", file = r)
+                        tak = False
+            elif wat == "4":
+                doof = True
+                while doof == True:
+                    toon = input("in toonsoort:\n%s" % inputindent).replace(" ","").replace("ineur","").replace("majeur","").replace("inor","").replace("major","")
+                    if toon.upper() in afsluitlijst:
+                        return
+                    elif toon == "":
+                        pass
+                    elif toon[0].upper() not in toonlijst:
+                        pass
+                    else:
+                        toon = toon.capitalize()
+                        repertoirelijst[int(welke)-1][3] = toon
+                        with open("Repertoire", "w") as r:
+                            print(repertoirelijst, end = "", file = r)
+                        doof = False
+    except(Exception) as error:
+        print(error)
+        print("Typ een geldig indexnummer (getal)")
 
 def delstyle():
     lijsten = showstyle()
@@ -277,14 +403,13 @@ def deltrack():
     except:
         print("Typ een geldig indexnummer (getal)")
 
-def seltrack():
-    selt = input("Welke titel:\n%s" % inputindent)
+####################################################################################################
 
 rep = True
 while rep == True:
     uit = "Y"
     stukje,stijltje,maatje,toontje = [],[],[],[]
-    keuze = input("Kies:\n  1 : Toon\n  2 : Voeg toe\n  3 : Verwijder\n  4 : Bewerk\n%s" % inputindent)
+    keuze = input("  1 : Toon\n  2 : Voeg toe\n  3 : Verwijder\n  4 : Bewerk\n%s" % inputindent)
     if keuze.upper() in afsluitlijst:
         exit()
     elif keuze == "1":
@@ -330,9 +455,9 @@ while rep == True:
             if tos.upper() in afsluitlijst:
                 break
             elif tos == "1":
-                os.system("vim Repertoire")
+                changetrack()
             elif tos == "2":
-                os.system("vim Stijlen")
+                changestyle()
     elif keuze == "0":
         print(forl8("Versie")+forc3(":")+versie)
         print(forl8("Datum")+forc3(":")+datum)
