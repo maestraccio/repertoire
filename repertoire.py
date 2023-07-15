@@ -76,29 +76,10 @@ def showtrack():
     eenoftwee = input("Wil je de output in 1, 2 of 3 kolommen:\n%s" % inputindent)
     if eenoftwee.upper() in afsluitlijst:
         return
-    elif eenoftwee == "1":
-        with open("Repertoirelijst.txt","w") as r:
-            for i in repertoirelijst:
-                trackindex += 1
-                for j in stukje:
-                    for k in stijltje:
-                        for l in maatje:
-                            for m in toontje:
-                                if k.lower() in i[0].lower() and j.lower() in i[1].lower() and l.lower() in i[2].lower() and m.lower() in i[3].lower():
-                                    if trackcount % 42 == 0:
-                                        print(forr3("+"+2*"-")+"-+-"+forl15(14*"-"+"+")+forl30(29*"-"+"+")+forc4(3*"-"+"+")+forl5(4*"-"+"+"))
-                                        print(forr3("+"+2*"-")+"-+-"+forl15(14*"-"+"+")+forl30(29*"-"+"+")+forc4(3*"-"+"+")+forl5(4*"-"+"+"),file = r)
-                                        print(forr3("ID")+" : "+forl15("STIJL")+forl30("TITEL")+forc4("TIK")+forl5("TOON"))
-                                        print(forr3("ID")+" : "+forl15("STIJL")+forl30("TITEL")+forc4("TIK")+forl5("TOON"),file = r)
-                                        print(forr3("+"+2*"-")+"-+-"+forl15(14*"-"+"+")+forl30(29*"-"+"+")+forc4(3*"-"+"+")+forl5(4*"-"+"+"))
-                                        print(forr3("+"+2*"-")+"-+-"+forl15(14*"-"+"+")+forl30(29*"-"+"+")+forc4(3*"-"+"+")+forl5(4*"-"+"+"),file = r)
-                                    if trackindex not in toontracklijst:
-                                        print(forr3(str(trackindex))+" : "+forl15(i[0][:15])+forl30(i[1][:30])+forc4(i[2])+forl5(i[3]))
-                                        print(forr3(str(trackindex))+" : "+forl15(i[0][:15])+forl30(i[1][:30])+forc4(i[2])+forl5(i[3]),file = r)
-                                        toontracklijst.append(trackindex)
-                                        trackcount += 1
-            print("Aantal tracks : %s" % trackcount)
-    elif eenoftwee == "2":
+    elif eenoftwee == "":
+        eenoftwee = 1
+    try:
+        eenoftwee = int(eenoftwee)
         with open("Repertoirelijst.txt","w") as r:
             breed = []
             for i in repertoirelijst:
@@ -111,50 +92,35 @@ def showtrack():
                                     if trackcount % 42 == 0:
                                         print()
                                         print("",file = r)
-                                        print(forr3("+"+2*"-")+"-+-"+forl15(14*"-"+"+")+forl30(29*"-"+"+")+forc4(3*"-"+"+")+forl5(5*"-")+"\\"+forr3("+"+2*"-")+"-+-"+forl15(14*"-"+"+")+forl30(29*"-"+"+")+forc4(3*"-"+"+")+forl5(4*"-"+"+"))
-                                        print(forr3("+"+2*"-")+"-+-"+forl15(14*"-"+"+")+forl30(29*"-"+"+")+forc4(3*"-"+"+")+forl5(5*"-")+"\\"+forr3("+"+2*"-")+"-+-"+forl15(14*"-"+"+")+forl30(29*"-"+"+")+forc4(3*"-"+"+")+forl5(4*"-"+"+"),file = r)
-                                        print(forr3("ID")+" : "+forl15("STIJL")+forl30("TITEL")+forc4("TIK")+forl5("TOON")+"\\"+forr3("ID")+" : "+forl15("STIJL")+forl30("TITEL")+forc4("TIK")+forl5("TOON"))
-                                        print(forr3("ID")+" : "+forl15("STIJL")+forl30("TITEL")+forc4("TIK")+forl5("TOON")+"\\"+forr3("ID")+" : "+forl15("STIJL")+forl30("TITEL")+forc4("TIK")+forl5("TOON"),file = r)
-                                        print(forr3("+"+2*"-")+"-+-"+forl15(14*"-"+"+")+forl30(29*"-"+"+")+forc4(3*"-"+"+")+forl5(5*"-")+"\\"+forr3("+"+2*"-")+"-+-"+forl15(14*"-"+"+")+forl30(29*"-"+"+")+forc4(3*"-"+"+")+forl5(4*"-"+"+"), end = "")
-                                        print(forr3("+"+2*"-")+"-+-"+forl15(14*"-"+"+")+forl30(29*"-"+"+")+forc4(3*"-"+"+")+forl5(5*"-")+"\\"+forr3("+"+2*"-")+"-+-"+forl15(14*"-"+"+")+forl30(29*"-"+"+")+forc4(3*"-"+"+")+forl5(4*"-"+"+"),file = r, end = "")
-                                    if (len(breed) == 1 and i[0] == breed[0][0]):
-                                        print("\\", end = "")
-                                        print("\\", end = "",file = r)
-                                    else:
+                                        for b in range(eenoftwee):
+                                            print(forr3("+"+2*"-")+"-+-"+forl15(14*"-"+"+")+forl30(29*"-"+"+")+forc4(3*"-"+"+")+forl5(5*"-"), end = "")
+                                            print(forr3("+"+2*"-")+"-+-"+forl15(14*"-"+"+")+forl30(29*"-"+"+")+forc4(3*"-"+"+")+forl5(5*"-"), end = "",file = r)
+                                            if b < eenoftwee-1:
+                                                print("\\", end = "")
+                                                print("\\", end = "",file = r)
+                                            else:
+                                                print()
+                                                print("",file = r)
+                                        for b in range(eenoftwee):
+                                            print(forr3("ID")+" : "+forl15("STIJL")+forl30("TITEL")+forc4("TIK")+forl5("TOON"), end = "")
+                                            print(forr3("ID")+" : "+forl15("STIJL")+forl30("TITEL")+forc4("TIK")+forl5("TOON"), end = "",file = r)
+                                            if b < eenoftwee-1:
+                                                print("\\", end = "")
+                                                print("\\", end = "",file = r)
+                                            else:
+                                                print()
+                                                print("",file = r)
+                                        for b in range(eenoftwee):
+                                            print(forr3("+"+2*"-")+"-+-"+forl15(14*"-"+"+")+forl30(29*"-"+"+")+forc4(3*"-"+"+")+forl5(5*"-"), end = "")
+                                            print(forr3("+"+2*"-")+"-+-"+forl15(14*"-"+"+")+forl30(29*"-"+"+")+forc4(3*"-"+"+")+forl5(5*"-"), end = "",file = r)
+                                            if b < eenoftwee-1:
+                                                print("\\", end = "")
+                                                print("\\", end = "",file = r)
+                                            else:
+                                                print("", end = "")
+                                                print("", end = "",file = r)
                                         breed = []
-                                        print()
-                                        print("",file = r)
-                                    if trackindex not in toontracklijst:
-                                        print(forr3(str(trackindex))+" : "+forl15(i[0][:15])+forl30(i[1][:30])+forc4(i[2])+forl5(i[3]),end = "")
-                                        print(forr3(str(trackindex))+" : "+forl15(i[0][:15])+forl30(i[1][:30])+forc4(i[2])+forl5(i[3]),end = "",file = r)
-                                        trackcount += 1
-                                        breed.append(i)
-                                        toontracklijst.append(trackindex)
-            print()
-            print("",file = r)
-            print("Aantal tracks : %s" % trackcount)
-            print("Aantal tracks : %s" % trackcount,file = r)
-    elif eenoftwee == "3":
-        with open("Repertoirelijst.txt","w") as r:
-            breed = []
-            for i in repertoirelijst:
-                trackindex += 1
-                for j in stukje:
-                    for k in stijltje:
-                        for l in maatje:
-                            for m in toontje:
-                                if k.lower() in i[0].lower() and j.lower() in i[1].lower() and l.lower() in i[2].lower() and m.lower() in i[3].lower():
-                                    if trackcount % 42 == 0:
-                                        print()
-                                        print("",file = r)
-                                        print(forr3("+"+2*"-")+"-+-"+forl15(14*"-"+"+")+forl30(29*"-"+"+")+forc4(3*"-"+"+")+forl5(5*"-")+"\\"+forr3("+"+2*"-")+"-+-"+forl15(14*"-"+"+")+forl30(29*"-"+"+")+forc4(3*"-"+"+")+forl5(5*"-")+"\\"+forr3("+"+2*"-")+"-+-"+forl15(14*"-"+"+")+forl30(29*"-"+"+")+forc4(3*"-"+"+")+forl5(4*"-"+"+"))
-                                        print(forr3("+"+2*"-")+"-+-"+forl15(14*"-"+"+")+forl30(29*"-"+"+")+forc4(3*"-"+"+")+forl5(5*"-")+"\\"+forr3("+"+2*"-")+"-+-"+forl15(14*"-"+"+")+forl30(29*"-"+"+")+forc4(3*"-"+"+")+forl5(5*"-")+"\\"+forr3("+"+2*"-")+"-+-"+forl15(14*"-"+"+")+forl30(29*"-"+"+")+forc4(3*"-"+"+")+forl5(4*"-"+"+"),file = r)
-                                        print(forr3("ID")+" : "+forl15("STIJL")+forl30("TITEL")+forc4("TIK")+forl5("TOON")+"\\"+forr3("ID")+" : "+forl15("STIJL")+forl30("TITEL")+forc4("TIK")+forl5("TOON")+"\\"+forr3("ID")+" : "+forl15("STIJL")+forl30("TITEL")+forc4("TIK")+forl5("TOON"))
-                                        print(forr3("ID")+" : "+forl15("STIJL")+forl30("TITEL")+forc4("TIK")+forl5("TOON")+"\\"+forr3("ID")+" : "+forl15("STIJL")+forl30("TITEL")+forc4("TIK")+forl5("TOON")+"\\"+forr3("ID")+" : "+forl15("STIJL")+forl30("TITEL")+forc4("TIK")+forl5("TOON"),file = r)
-                                        print(forr3("+"+2*"-")+"-+-"+forl15(14*"-"+"+")+forl30(29*"-"+"+")+forc4(3*"-"+"+")+forl5(5*"-")+"\\"+forr3("+"+2*"-")+"-+-"+forl15(14*"-"+"+")+forl30(29*"-"+"+")+forc4(3*"-"+"+")+forl5(5*"-")+"\\"+forr3("+"+2*"-")+"-+-"+forl15(14*"-"+"+")+forl30(29*"-"+"+")+forc4(3*"-"+"+")+forl5(4*"-"+"+"), end = "")
-                                        print(forr3("+"+2*"-")+"-+-"+forl15(14*"-"+"+")+forl30(29*"-"+"+")+forc4(3*"-"+"+")+forl5(5*"-")+"\\"+forr3("+"+2*"-")+"-+-"+forl15(14*"-"+"+")+forl30(29*"-"+"+")+forc4(3*"-"+"+")+forl5(5*"-")+"\\"+forr3("+"+2*"-")+"-+-"+forl15(14*"-"+"+")+forl30(29*"-"+"+")+forc4(3*"-"+"+")+forl5(4*"-"+"+"), end = "",file = r)
-                                        breed = []
-                                    if (len(breed) == 1 and i[0] == breed[0][0]) or (len(breed) == 2 and i[0] == breed[1][0]):
+                                    if len(breed) <= eenoftwee-1 and len(breed) > 0 and i[0] == breed[-1][0]:
                                         print("\\", end = "")
                                         print("\\", end = "",file = r)
                                     else:
@@ -170,6 +136,8 @@ def showtrack():
             print()
             print("Aantal tracks : %s" % trackcount)
             print("Aantal tracks : %s" % trackcount,file = r)
+    except:
+        print("Geef een getal op.")
     repertoirelijst = sorted(repertoirelijst)
     return repertoirelijst,toontracklijst
 
