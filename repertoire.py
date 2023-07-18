@@ -89,7 +89,7 @@ def showtrack():
                         for l in maatje:
                             for m in toontje:
                                 if k.lower() in i[0].lower() and j.lower() in i[1].lower() and l.lower() in i[2].lower() and m.lower() in i[3].lower():
-                                    if trackcount % 42 == 0:
+                                    if trackcount/eenoftwee % 42 == 0:
                                         print()
                                         print("",file = r)
                                         for b in range(eenoftwee):
