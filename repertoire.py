@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 import ast, os
 
-versie = "1.21"
-datum = "20230702"
+versie = "2.0"
+datum = "20230718"
 plaats = "Pedara"
 
 basismap = os.path.dirname(os.path.realpath(__file__)) # de map waar het pythonscript in staat moet schrijfbaar zijn
