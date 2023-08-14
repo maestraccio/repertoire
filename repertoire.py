@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 import ast, os
 
-versie = "2.0"
-datum = "20230718"
+versie = "2.1"
+datum = "20230814"
 plaats = "Pedara"
 
 basismap = os.path.dirname(os.path.realpath(__file__)) # de map waar het pythonscript in staat moet schrijfbaar zijn
@@ -73,7 +73,7 @@ def showtrack():
     toontracklijst = []
     trackindex = 0
     trackcount = 0
-    eenoftwee = input("Wil je de output in 1, 2 of 3 kolommen:\n%s" % inputindent)
+    eenoftwee = input("Wil je de volledige output in 1, 2 of 3 kolommen of alleen titel+toonsoort in 1 kolom (\"c\" = \"compact\"):\n%s" % inputindent)
     if eenoftwee.upper() in afsluitlijst:
         return
     elif eenoftwee == "":
@@ -137,7 +137,25 @@ def showtrack():
             print("Aantal tracks : %s" % trackcount)
             print("Aantal tracks : %s" % trackcount,file = r)
     except:
-        print("Geef een getal op.")
+        if eenoftwee.lower() == "c":
+            with open("Repertoirelijst.txt","w") as r:
+                for i in repertoirelijst:
+                    trackindex += 1
+                    for j in stukje:
+                        for k in stijltje:
+                            for l in maatje:
+                                for m in toontje:
+                                    if k.lower() in i[0].lower() and j.lower() in i[1].lower() and l.lower() in i[2].lower() and m.lower() in i[3].lower():
+                                        if trackindex not in toontracklijst:
+                                            print(forl30(i[1][:30])+forl5(i[3]))
+                                            print(forl30(i[1][:30])+forl5(i[3]),file = r)
+                                            trackcount += 1
+                                            toontracklijst.append(trackindex)
+                print()
+                print("Aantal tracks : %s" % trackcount)
+                print("Aantal tracks : %s" % trackcount,file = r)
+        else:
+            print("Geef een getal of \"c\" op.")
     repertoirelijst = sorted(repertoirelijst)
     return repertoirelijst,toontracklijst
 
