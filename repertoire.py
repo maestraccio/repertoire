@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 import ast, os
 
-versie = "2.1"
-datum = "20230814"
+versie = "2.2"
+datum = "20230922"
 plaats = "Pedara"
 
 basismap = os.path.dirname(os.path.realpath(__file__)) # de map waar het pythonscript in staat moet schrijfbaar zijn
@@ -425,7 +425,7 @@ while rep == True:
     elif keuze == "1":
         doof = True
         while doof == True:
-            tos = input("Toon\n  1 : Track\n  2 : Stijl\n%s" % inputindent)
+            tos = input("Toon\n  1 : Tracks\n  2 : Stijlen\n%s" % inputindent)
             if tos.upper() in afsluitlijst:
                 break
             elif tos == "1":
@@ -435,7 +435,7 @@ while rep == True:
     elif keuze == "2":
         bij = True
         while bij == True:
-            tos = input("Voeg toe\n  1 : Track\n  2 : Stijl\n%s" % inputindent)
+            tos = input("Voeg toe\n  1 : Tracks\n  2 : Stijlen\n%s" % inputindent)
             if tos.upper() in afsluitlijst:
                 break
             elif tos == "1":
@@ -445,23 +445,17 @@ while rep == True:
     elif keuze == "3":
         weg = True
         while weg == True:
-            tos = input("Verwijder\n  1 : Track\n  2 : Stijl\n%s" % inputindent)
+            tos = input("Verwijder\n  1 : Tracks\n  2 : Stijlen\n%s" % inputindent)
             if tos.upper() in afsluitlijst:
                 break
             elif tos == "1":
-                try:
-                    deltrack()
-                except(Exception) as error:
-                    print(error)
+                deltrack()
             elif tos == "2":
-                try:
-                    delstyle()
-                except(Exception) as error:
-                    print(error)
+                delstyle()
     elif keuze == "4":
         hand = True
         while hand == True:
-            tos = input("Bewerk\n  1 : Track\n  2 : Stijl\n%s" % inputindent)
+            tos = input("Bewerk\n  1 : Tracks\n  2 : Stijlen\n%s" % inputindent)
             if tos.upper() in afsluitlijst:
                 break
             elif tos == "1":
