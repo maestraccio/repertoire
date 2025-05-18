@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
-import ast, os
+import ast, os, chooseFromNumberedList
+from chooseFromNumberedList import chooseFromNumberedList
 
-versie = "2.2"
-datum = "20230922"
+versie = "2.3"
+datum = "20250518"
 plaats = "Pedara"
 
 basismap = os.path.dirname(os.path.realpath(__file__)) # de map waar het pythonscript in staat moet schrijfbaar zijn
@@ -136,7 +137,8 @@ def showtrack():
             print()
             print("Aantal tracks : %s" % trackcount)
             print("Aantal tracks : %s" % trackcount,file = r)
-    except:
+    except(Exception) as f:
+        #print(f)
         if eenoftwee.lower() == "c":
             with open("Repertoirelijst.txt","w") as r:
                 for i in repertoirelijst:
@@ -419,50 +421,75 @@ rep = True
 while rep == True:
     uit = "Y"
     stukje,stijltje,maatje,toontje = [],[],[],[]
-    keuze = input("  1 : Toon\n  2 : Voeg toe\n  3 : Verwijder\n  4 : Bewerk\n%s" % inputindent)
-    if keuze.upper() in afsluitlijst:
-        exit()
-    elif keuze == "1":
+#    keuze = input("  1 : Toon\n  2 : Voeg toe\n  3 : Verwijder\n  4 : Bewerk\n%s" % inputindent)
+    keuzelijst = [
+    "Toon",
+    "Voeg toe",
+    "Verwijder",
+    "Bewerk\n",
+    "Verlaten"
+    ]
+    wat,keuze = chooseFromNumberedList(keuzelijst,"a",1,1)
+    if keuze == 0:
         doof = True
         while doof == True:
-            tos = input("Toon\n  1 : Tracks\n  2 : Stijlen\n%s" % inputindent)
-            if tos.upper() in afsluitlijst:
-                break
-            elif tos == "1":
+            print(wat)
+            toslijst = [
+            "Tracks",
+            "Stijlen\n",
+            "Verlaten"
+            ]
+            wat,tos = chooseFromNumberedList(toslijst,"a",1,1)
+            if tos == 0:
                 showtrack()
-            elif tos == "2":
+            elif tos == 1:
                 showstyle()
-    elif keuze == "2":
+            elif tos == 2:
+                break
+    elif keuze == 1:
         bij = True
         while bij == True:
-            tos = input("Voeg toe\n  1 : Tracks\n  2 : Stijlen\n%s" % inputindent)
-            if tos.upper() in afsluitlijst:
-                break
-            elif tos == "1":
+            toslijst = [
+            "Tracks",
+            "Stijlen\n",
+            "Verlaten"
+            ]
+            wat,tos = chooseFromNumberedList(toslijst,"a",1,1)
+            if tos == 0:
                 newtrack()
-            elif tos == "2":
+            elif tos == 1:
                 newstyle()
-    elif keuze == "3":
+            elif tos == 2:
+                break
+    elif keuze == 2:
         weg = True
         while weg == True:
-            tos = input("Verwijder\n  1 : Tracks\n  2 : Stijlen\n%s" % inputindent)
-            if tos.upper() in afsluitlijst:
-                break
-            elif tos == "1":
+            toslijst = [
+            "Tracks",
+            "Stijlen\n",
+            "Verlaten"
+            ]
+            wat,tos = chooseFromNumberedList(toslijst,"a",1,1)
+            if tos == 0:
                 deltrack()
-            elif tos == "2":
+            elif tos == 1:
                 delstyle()
-    elif keuze == "4":
+            elif tos == 2:
+                break
+    elif keuze == 3:
         hand = True
         while hand == True:
-            tos = input("Bewerk\n  1 : Tracks\n  2 : Stijlen\n%s" % inputindent)
-            if tos.upper() in afsluitlijst:
-                break
-            elif tos == "1":
+            toslijst = [
+            "Tracks",
+            "Stijlen\n",
+            "Verlaten"
+            ]
+            wat,tos = chooseFromNumberedList(toslijst,"a",1,1)
+            if tos == 0:
                 changetrack()
-            elif tos == "2":
+            elif tos == 1:
                 changestyle()
-    elif keuze == "0":
-        print(forl8("Versie")+forc3(":")+versie)
-        print(forl8("Datum")+forc3(":")+datum)
-        print(forl8("Plaats")+forc3(":")+plaats)
+            elif tos == 2:
+                break
+    elif keuze == 4:
+        exit()
