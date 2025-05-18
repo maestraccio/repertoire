@@ -449,6 +449,7 @@ while rep == True:
     elif keuze == 1:
         bij = True
         while bij == True:
+            print(wat)
             toslijst = [
             "Tracks",
             "Stijlen\n",
@@ -464,6 +465,7 @@ while rep == True:
     elif keuze == 2:
         weg = True
         while weg == True:
+            print(wat)
             toslijst = [
             "Tracks",
             "Stijlen\n",
@@ -479,6 +481,7 @@ while rep == True:
     elif keuze == 3:
         hand = True
         while hand == True:
+            print(wat)
             toslijst = [
             "Tracks",
             "Stijlen\n",
