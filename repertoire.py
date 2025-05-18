@@ -429,16 +429,16 @@ while rep == True:
     "Bewerk\n",
     "Verlaten"
     ]
+    toslijst = [
+    "Tracks",
+    "Stijlen\n",
+    "Verlaten"
+    ]
     wat,keuze = chooseFromNumberedList(keuzelijst,"a",1,1)
     if keuze == 0:
         doof = True
         while doof == True:
             print(wat)
-            toslijst = [
-            "Tracks",
-            "Stijlen\n",
-            "Verlaten"
-            ]
             wat,tos = chooseFromNumberedList(toslijst,"a",1,1)
             if tos == 0:
                 showtrack()
@@ -450,11 +450,6 @@ while rep == True:
         bij = True
         while bij == True:
             print(wat)
-            toslijst = [
-            "Tracks",
-            "Stijlen\n",
-            "Verlaten"
-            ]
             wat,tos = chooseFromNumberedList(toslijst,"a",1,1)
             if tos == 0:
                 newtrack()
@@ -466,11 +461,6 @@ while rep == True:
         weg = True
         while weg == True:
             print(wat)
-            toslijst = [
-            "Tracks",
-            "Stijlen\n",
-            "Verlaten"
-            ]
             wat,tos = chooseFromNumberedList(toslijst,"a",1,1)
             if tos == 0:
                 deltrack()
@@ -482,11 +472,6 @@ while rep == True:
         hand = True
         while hand == True:
             print(wat)
-            toslijst = [
-            "Tracks",
-            "Stijlen\n",
-            "Verlaten"
-            ]
             wat,tos = chooseFromNumberedList(toslijst,"a",1,1)
             if tos == 0:
                 changetrack()
