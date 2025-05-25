@@ -434,12 +434,12 @@ while rep == True:
     "Stijlen\n",
     "Verlaten"
     ]
-    wat,keuze = chooseFromNumberedList(keuzelijst,"a",1,1)
+    wat,keuze = chooseFromNumberedList([keuzelijst,"a",1,1])
     if keuze == 0:
         doof = True
         while doof == True:
             print(wat)
-            wat,tos = chooseFromNumberedList(toslijst,"a",1,1)
+            wat,tos = chooseFromNumberedList([toslijst,"a",1,1])
             if tos == 0:
                 showtrack()
             elif tos == 1:
@@ -450,7 +450,7 @@ while rep == True:
         bij = True
         while bij == True:
             print(wat)
-            wat,tos = chooseFromNumberedList(toslijst,"a",1,1)
+            wat,tos = chooseFromNumberedList([toslijst,"a",1,1])
             if tos == 0:
                 newtrack()
             elif tos == 1:
@@ -461,7 +461,7 @@ while rep == True:
         weg = True
         while weg == True:
             print(wat)
-            wat,tos = chooseFromNumberedList(toslijst,"a",1,1)
+            wat,tos = chooseFromNumberedList([toslijst,"a",1,1])
             if tos == 0:
                 deltrack()
             elif tos == 1:
@@ -472,7 +472,7 @@ while rep == True:
         hand = True
         while hand == True:
             print(wat)
-            wat,tos = chooseFromNumberedList(toslijst,"a",1,1)
+            wat,tos = chooseFromNumberedList([toslijst,"a",1,1])
             if tos == 0:
                 changetrack()
             elif tos == 1:
